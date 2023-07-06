@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+<style>
+body {
+    background: linear-gradient(135deg, #4203a9, #90bafc);
+    width:100%;
+    height: 100vh;
+    color:#fff;
+}
+div {
+    margin: 0 auto;
+    margin-top: 150px;
+    display: flex;
+    flex-direction: column;
+    width:fit-content;
+}
+div h1 {
+    font-size: 50px;
+}
+
+</style>    
+</head>
+<body>
+    <div>
+        <h1 id="timer">Enter A Date</h1>
+        <input type="date" id="deadline">
+        <button onclick="startCountdown()">Let's Count!</button>    
+    </div>
+    <p id="result"></p>
+</body>
+<script>
+function startCountdown() {
+    var deadlineInput = document.getElementById("deadline");
+    var deadline = new Date(deadlineInput.value).getTime();
+
+    if (isNaN(deadline)) {
+        alert("Please Select A Valid Date");
+        return;
+    }
+
+    countdown(deadline);
+}
+
+function countdown(deadline) {
+    var now = new Date().getTime();
+    var goal = deadline-now;
+
+    if (goal <= 0) {
+        document.getElementById('timer').textContent = "Time's up!";    
+        return;
+    }
+
+    var days = Math.floor(goal / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((goal / (1000 * 60 * 60)) % 24);
+    var minutes = Math.floor((goal / 1000 / 60) % 60);
+    var seconds = Math.floor((goal / 1000) % 60);
+    const timer = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    document.getElementById('timer').textContent = timer;
+    setTimeout(() => {
+        countdown(deadline);
+    }, 1000);
+}
+
+
+
+
+</script>
+</html>
